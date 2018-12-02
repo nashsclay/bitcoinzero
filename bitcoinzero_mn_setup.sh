@@ -120,7 +120,7 @@ logintimestamps=1
 maxconnections=256
 #bind=$NODEIP
 bznode=1
-bznodeaddr=$NODEIP:$COIN_PORT
+#bznodeaddr=$NODEIP:$COIN_PORT BREAKS WALLET WHEN ON
 externalip=$NODEIP:$COIN_PORT
 bznodeprivkey=$COINKEY
 EOF
