@@ -93,7 +93,7 @@ EOF
 }
 
 function create_key() {
-  echo -e "Enter your ${RED}$COIN_NAME Masternode Private Key${NC}. Leave it blank to generate a new ${RED}Masternode Private Key${NC} for you:"
+  echo -e "Enter your ${RED}$COIN_NAME bznode Private Key${NC}. Leave it blank to generate a new ${RED}bznode Private Key${NC} for you:"
   read -e COINKEY
   if [[ -z "$COINKEY" ]]; then
   $COIN_PATH$COIN_DAEMON -daemon
@@ -102,12 +102,12 @@ function create_key() {
    echo -e "${RED}$COIN_NAME server couldn not start. Check /var/log/syslog for errors.{$NC}"
    exit 1
   fi
-  COINKEY=$($COIN_PATH$COIN_CLI masternode genkey)
+  COINKEY=$($COIN_PATH$COIN_CLI bznode genkey)
   if [ "$?" -gt "0" ];
     then
     echo -e "${RED}Wallet not fully loaded. Let us wait and try again to generate the Private Key${NC}"
     sleep 30
-    COINKEY=$($COIN_PATH$COIN_CLI masternode genkey)
+    COINKEY=$($COIN_PATH$COIN_CLI bznode genkey)
   fi
   $COIN_PATH$COIN_CLI stop
 fi
@@ -120,10 +120,10 @@ function update_config() {
 logintimestamps=1
 maxconnections=256
 #bind=$NODEIP
-masternode=1
-masternodeaddr=$NODEIP:$COIN_PORT
+bznode=1
+bznodeaddr=$NODEIP:$COIN_PORT
 externalip=$NODEIP:$COIN_PORT
-masternodeprivkey=$COINKEY
+bznodeprivkey=$COINKEY
 EOF
 }
 
@@ -189,7 +189,7 @@ fi
 }
 
 function prepare_system() {
-echo -e "Prepare the system to install ${GREEN}$COIN_NAME${NC} master node."
+echo -e "Prepare the system to install ${GREEN}$COIN_NAME${NC} bznode."
 apt-get update >/dev/null 2>&1
 DEBIAN_FRONTEND=noninteractive apt-get update > /dev/null 2>&1
 DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -y -qq upgrade >/dev/null 2>&1 
@@ -237,14 +237,14 @@ function create_swap() {
 
 function important_information() {
  echo -e "================================================================================================================================"
- echo -e "$COIN_NAME Masternode is up and running listening on port ${RED}$COIN_PORT${NC}."
+ echo -e "$COIN_NAME bznode is up and running listening on port ${RED}$COIN_PORT${NC}."
  echo -e "Configuration file is: ${RED}$CONFIGFOLDER/$CONFIG_FILE${NC}"
  echo -e "Start: ${RED}systemctl start $COIN_NAME.service${NC}"
  echo -e "Stop: ${RED}systemctl stop $COIN_NAME.service${NC}"
  echo -e "VPS_IP:PORT ${RED}$NODEIP:$COIN_PORT${NC}"
- echo -e "MASTERNODE PRIVATEKEY is: ${RED}$COINKEY${NC}"
+ echo -e "BZNODE PRIVATEKEY is: ${RED}$COINKEY${NC}"
  echo -e "Please check ${RED}$COIN_NAME${NC} daemon is running with the following command: ${RED}systemctl status $COIN_NAME.service${NC}"
- echo -e "Use ${RED}$COIN_CLI masternode status${NC} to check your MN."
+ echo -e "Use ${RED}$COIN_CLI bznode status${NC} to check your MN."
  if [[ -n $SENTINEL_REPO  ]]; then
   echo -e "${RED}Sentinel${NC} is installed in ${RED}$CONFIGFOLDER/sentinel${NC}"
   echo -e "Sentinel logs is: ${RED}$CONFIGFOLDER/sentinel.log${NC}"
