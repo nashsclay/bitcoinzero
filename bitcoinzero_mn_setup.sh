@@ -6,7 +6,6 @@ CONFIG_FILE='bitcoinzero.conf'
 CONFIGFOLDER='/root/.bitcoinzero'
 COIN_DAEMON='bitcoinzerod'
 COIN_CLI='bitcoinzero-cli'
-# COIN_TX='bitcoinzero-tx'
 COIN_QT='bitcoinzero-qt'
 COIN_PATH='/usr/local/bin/'
 COIN_TGZ='https://github.com/BitcoinZeroOfficial/bitcoinzero/releases/download/5.0.1.0/linux-x64.tar.gz'
@@ -31,8 +30,8 @@ function download_node() {
   tar -zxvf $COIN_ZIP >/dev/null 2>&1
   #cd bin #verify
   rm $COIN_QT
-  chmod +x $COIN_DAEMON $COIN_CLI # $COIN_TX 
-  cp $COIN_DAEMON $COIN_CLI $COIN_PATH # $COIN_TX
+  chmod +x $COIN_DAEMON $COIN_CLI 
+  cp $COIN_DAEMON $COIN_CLI $COIN_PATH
   cd ~ >/dev/null
   rm -rf $TMP_FOLDER >/dev/null 2>&1
   clear
